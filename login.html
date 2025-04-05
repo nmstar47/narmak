@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>ورود و ثبت‌نام - جگرسرای نارمک</title>
+    <title>ورود / ثبت‌نام - جگرسرای نارمک</title>
     <link href="https://fonts.googleapis.com/css2?family=Vazirmatn:wght@400;700&display=swap" rel="stylesheet">
     <style>
         body {
@@ -15,103 +15,206 @@
             display: flex;
             justify-content: center;
             align-items: center;
-            height: 100vh;
+            min-height: 100vh;
         }
+
         .auth-container {
-            max-width: 400px;
-            padding: 30px;
             background-color: #212121;
-            border: 8px solid #212121;
-            border-radius: 20px;
-            box-shadow: 0 0 30px rgba(0, 0, 0, 0.5);
-            animation: fadeIn 1s ease-out;
-        }
-        h1 {
-            color: #a52a2a;
-            text-align: center;
-            font-size: 40px;
-            margin-bottom: 20px;
-        }
-        .tab {
-            display: flex;
-            justify-content: space-around;
-            margin-bottom: 20px;
-        }
-        .tab button {
-            background: none;
-            border: none;
-            color: #fff;
-            font-size: 18px;
-            padding: 10px;
-            cursor: pointer;
-            transition: color 0.3s ease;
-        }
-        .tab button.active {
-            color: #a52a2a;
-            border-bottom: 2px solid #a52a2a;
-        }
-        .form {
-            display: none;
-        }
-        .form.active {
-            display: block;
-        }
-        .form input {
+            padding: 30px;
+            border-radius: 15px;
+            box-shadow: 0 4px 20px rgba(0, 0, 0, 0.3);
             width: 100%;
-            padding: 10px;
-            margin: 10px 0;
-            border-radius: 10px;
-            border: none;
-            background-color: #fff;
-            color: #000;
+            max-width: 350px;
+            text-align: center;
         }
-        .form button {
+
+        h2 {
+            color: #a52a2a;
+            font-size: 28px;
+            margin-bottom: 25px;
+        }
+
+        .input-box {
+            margin: 15px 0;
+        }
+
+        input {
+            width: 100%;
+            padding: 12px;
+            background-color: #3E2723;
+            border: none;
+            border-radius: 10px;
+            color: #fff;
+            font-size: 16px;
+            outline: none;
+            box-sizing: border-box;
+        }
+
+        input:focus {
+            background-color: #4A2F2A;
+        }
+
+        .auth-btn {
             background: linear-gradient(45deg, #ff6f61, #ffb347);
             color: #fff;
-            padding: 10px 20px;
+            padding: 12px;
+            border-radius: 10px;
             border: none;
-            border-radius: 20px;
+            font-size: 16px;
+            font-weight: bold;
             cursor: pointer;
             width: 100%;
-            transition: transform 0.3s ease, background-color 0.3s ease;
+            margin-top: 20px;
         }
-        .form button:hover {
-            transform: scale(1.05);
-            background-color: #d32f2f;
+
+        .auth-btn:hover {
+            background: linear-gradient(45deg, #ff8561, #ffc107);
         }
-        @keyframes fadeIn {
-            from { opacity: 0; transform: translateY(-20px); }
-            to { opacity: 1; transform: translateY(0); }
+
+        .toggle-link {
+            color: #ccc;
+            font-size: 14px;
+            cursor: pointer;
+            margin-top: 15px;
+            display: inline-block;
+        }
+
+        .toggle-link:hover {
+            color: #d32f2f;
+        }
+
+        #verification-section {
+            display: none;
+            margin-top: 20px;
         }
     </style>
 </head>
 <body>
     <div class="auth-container">
-        <h1>جگرسرای نارمک</h1>
-        <div class="tab">
-            <button class="tab-btn active" onclick="showForm('login')">ورود</button>
-            <button class="tab-btn" onclick="showForm('signup')">ثبت‌نام</button>
+        <h2 id="auth-title">ورود</h2>
+        <form id="auth-form">
+            <div class="input-box">
+                <input type="text" id="username" placeholder="نام کاربری" required>
+            </div>
+            <div class="input-box" id="phone-field">
+                <input type="tel" id="phone" placeholder="شماره تلفن (مثال: 09123456789)" pattern="[0-9]{11}" required>
+            </div>
+            <div class="input-box" id="email-field">
+                <input type="email" id="email" placeholder="ایمیل (اختیاری)">
+            </div>
+            <div class="input-box" id="password-field">
+                <input type="password" id="password" placeholder="رمز عبور" required>
+            </div>
+            <button type="submit" class="auth-btn" id="auth-submit">ورود</button>
+        </form>
+        <div id="verification-section">
+            <div class="input-box">
+                <input type="text" id="verification-code" placeholder="کد تأیید">
+            </div>
+            <button class="auth-btn" id="verify-btn">تأیید کد</button>
         </div>
-        <div id="login" class="form active">
-            <input type="text" placeholder="نام کاربری">
-            <input type="password" placeholder="رمز عبور">
-            <button onclick="alert('ورود انجام شد!')">ورود</button>
-        </div>
-        <div id="signup" class="form">
-            <input type="text" placeholder="نام کاربری">
-            <input type="email" placeholder="ایمیل">
-            <input type="password" placeholder="رمز عبور">
-            <button onclick="alert('ثبت‌نام انجام شد!')">ثبت‌نام</button>
-        </div>
+        <div class="toggle-link" id="toggle-auth">حساب ندارید؟ ثبت‌نام کنید</div>
     </div>
 
     <script>
-        function showForm(formId) {
-            document.querySelectorAll('.form').forEach(form => form.classList.remove('active'));
-            document.querySelectorAll('.tab-btn').forEach(btn => btn.classList.remove('active'));
-            document.getElementById(formId).classList.add('active');
-            document.querySelector(`[onclick="showForm('${formId}')"]`).classList.add('active');
-        }
+        const form = document.getElementById('auth-form');
+        const title = document.getElementById('auth-title');
+        const submitBtn = document.getElementById('auth-submit');
+        const toggleLink = document.getElementById('toggle-auth');
+        const phoneField = document.getElementById('phone-field');
+        const emailField = document.getElementById('email-field');
+        const passwordField = document.getElementById('password-field');
+        const verificationSection = document.getElementById('verification-section');
+        const verifyBtn = document.getElementById('verify-btn');
+        let isLogin = true;
+        let tempUserData = null;
+
+        toggleLink.addEventListener('click', () => {
+            isLogin = !isLogin;
+            title.textContent = isLogin ? 'ورود' : 'ثبت‌نام';
+            submitBtn.textContent = isLogin ? 'ورود' : 'ثبت‌نام';
+            toggleLink.textContent = isLogin ? 'حساب ندارید؟ ثبت‌نام کنید' : 'حساب دارید؟ وارد شوید';
+            phoneField.style.display = isLogin ? 'none' : 'block';
+            emailField.style.display = isLogin ? 'none' : 'block';
+            passwordField.style.display = 'block';
+            verificationSection.style.display = 'none';
+        });
+
+        form.addEventListener('submit', async (e) => {
+            e.preventDefault();
+            const username = document.getElementById('username').value;
+            const password = document.getElementById('password').value;
+
+            if (isLogin) {
+                try {
+                    const response = await fetch('http://localhost:3000/login', {
+                        method: 'POST',
+                        headers: { 'Content-Type': 'application/json' },
+                        body: JSON.stringify({ username, password })
+                    });
+                    const data = await response.json();
+                    if (response.ok) {
+                        localStorage.setItem('token', data.token);
+                        window.location.href = 'index.html';
+                    } else {
+                        alert(data.message);
+                    }
+                } catch (error) {
+                    alert('خطایی رخ داد!');
+                }
+            } else {
+                const phone = document.getElementById('phone').value;
+                const email = document.getElementById('email').value || '';
+                tempUserData = { username, password, phone, email };
+
+                try {
+                    const response = await fetch('http://localhost:3000/send-verification', {
+                        method: 'POST',
+                        headers: { 'Content-Type': 'application/json' },
+                        body: JSON.stringify({ phone })
+                    });
+                    const data = await response.json();
+                    if (response.ok) {
+                        form.style.display = 'none';
+                        verificationSection.style.display = 'block';
+                    } else {
+                        alert(data.message);
+                    }
+                } catch (error) {
+                    alert('خطا در ارسال کد!');
+                }
+            }
+        });
+
+        verifyBtn.addEventListener('click', async () => {
+            const code = document.getElementById('verification-code').value;
+            try {
+                const response = await fetch('http://localhost:3000/verify-code', {
+                    method: 'POST',
+                    headers: { 'Content-Type': 'application/json' },
+                    body: JSON.stringify({ phone: tempUserData.phone, code })
+                });
+                const data = await response.json();
+                if (response.ok) {
+                    const regResponse = await fetch('http://localhost:3000/register', {
+                        method: 'POST',
+                        headers: { 'Content-Type': 'application/json' },
+                        body: JSON.stringify(tempUserData)
+                    });
+                    const regData = await regResponse.json();
+                    if (regResponse.ok) {
+                        alert('ثبت‌نام موفق!');
+                        window.location.href = 'index.html';
+                    } else {
+                        alert(regData.message);
+                    }
+                } else {
+                    alert(data.message);
+                }
+            } catch (error) {
+                alert('خطا در تأیید کد!');
+            }
+        });
     </script>
 </body>
 </html>
