@@ -1,0 +1,186 @@
+<!DOCTYPE html>
+<html lang="fa" dir="rtl">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>مدیریت منوی جگرسرای نارمک</title>
+    <link href="https://fonts.googleapis.com/css2?family=Vazirmatn:wght@400;700&display=swap" rel="stylesheet">
+    <style>
+        body {
+            background-color: #000000;
+            color: #fff;
+            margin: 0;
+            padding: 0;
+            font-family: 'Vazirmatn', sans-serif;
+        }
+        .admin-container {
+            max-width: 900px;
+            margin: 40px auto;
+            padding: 30px;
+            background-color: #212121;
+            border: 8px solid #212121;
+            border-radius: 20px;
+            box-shadow: 0 0 30px rgba(0, 0, 0, 0.5);
+            animation: slideIn 1s ease-out;
+        }
+        h1 {
+            color: #a52a2a;
+            text-align: center;
+            font-size: 50px;
+            animation: fadeIn 1s ease-out;
+        }
+        .form-section, .menu-list {
+            background-color: #3E2723;
+            padding: 20px;
+            border-radius: 15px;
+            margin-bottom: 20px;
+        }
+        .form-section input, .form-section textarea {
+            width: 100%;
+            padding: 10px;
+            margin: 10px 0;
+            border-radius: 10px;
+            border: none;
+            background-color: #fff;
+            color: #000;
+        }
+        .form-section button, .edit-btn, .delete-btn {
+            background: linear-gradient(45deg, #ff6f61, #ffb347);
+            color: #fff;
+            padding: 10px 20px;
+            border: none;
+            border-radius: 20px;
+            cursor: pointer;
+            transition: transform 0.3s ease, background-color 0.3s ease;
+        }
+        .form-section button:hover, .edit-btn:hover, .delete-btn:hover {
+            transform: scale(1.1);
+            background-color: #d32f2f;
+        }
+        .menu-list .menu-item {
+            display: flex;
+            align-items: center;
+            background-color: #3E2723;
+            padding: 15px;
+            border-radius: 15px;
+            margin: 10px 0;
+            transition: 0.3s;
+        }
+        .menu-item img {
+            width: 100px;
+            height: 100px;
+            object-fit: cover;
+            border-radius: 10px;
+            margin-left: 15px;
+        }
+        .menu-item-details {
+            flex-grow: 1;
+        }
+        @keyframes fadeIn {
+            from { opacity: 0; transform: translateY(-20px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+        @keyframes slideIn {
+            from { transform: translateX(100%); opacity: 0; }
+            to { transform: translateX(0); opacity: 1; }
+        }
+    </style>
+</head>
+<body>
+    <div class="admin-container">
+        <h1>مدیریت منوی جگرسرای نارمک</h1>
+
+        <!-- فرم اضافه کردن آیتم جدید -->
+        <div class="form-section">
+            <h2>اضافه کردن آیتم جدید</h2>
+            <input type="text" id="item-name" placeholder="نام آیتم">
+            <textarea id="item-desc" placeholder="توضیحات آیتم"></textarea>
+            <input type="number" id="item-price" placeholder="قیمت (تومان)">
+            <input type="file" id="item-image" accept="image/*">
+            <button onclick="addItem()">اضافه کردن</button>
+        </div>
+
+        <!-- لیست آیتم‌ها -->
+        <div class="menu-list" id="menu-list">
+            <h2>آیتم‌های فعلی</h2>
+            <!-- آیتم‌ها اینجا به صورت داینامیک اضافه می‌شوند -->
+        </div>
+    </div>
+
+    <script>
+        let menuItems = JSON.parse(localStorage.getItem('menuItems')) || [];
+
+        function addItem() {
+            const name = document.getElementById('item-name').value;
+            const desc = document.getElementById('item-desc').value;
+            const price = document.getElementById('item-price').value;
+            const imageInput = document.getElementById('item-image');
+            const imageFile = imageInput.files[0];
+
+            if (name && desc && price && imageFile) {
+                const reader = new FileReader();
+                reader.onload = function(e) {
+                    const item = { name, desc, price: parseInt(price), image: e.target.result };
+                    menuItems.push(item);
+                    localStorage.setItem('menuItems', JSON.stringify(menuItems));
+                    updateMenuList();
+                    clearForm();
+                };
+                reader.readAsDataURL(imageFile);
+            } else {
+                alert('لطفاً همه فیلدها را پر کنید!');
+            }
+        }
+
+        function updateMenuList() {
+            const menuList = document.getElementById('menu-list');
+            menuList.innerHTML = '<h2>آیتم‌های فعلی</h2>';
+            menuItems.forEach((item, index) => {
+                const div = document.createElement('div');
+                div.classList.add('menu-item');
+                div.innerHTML = `
+                    <img src="${item.image}" alt="${item.name}">
+                    <div class="menu-item-details">
+                        <h3>${item.name}</h3>
+                        <p>${item.desc}</p>
+                        <p>${item.price.toLocaleString()} تومان</p>
+                    </div>
+                    <button class="edit-btn" onclick="editItem(${index})">ویرایش</button>
+                    <button class="delete-btn" onclick="deleteItem(${index})">حذف</button>
+                `;
+                menuList.appendChild(div);
+            });
+        }
+
+        function editItem(index) {
+            const newName = prompt('نام جدید:', menuItems[index].name);
+            const newDesc = prompt('توضیحات جدید:', menuItems[index].desc);
+            const newPrice = prompt('قیمت جدید (تومان):', menuItems[index].price);
+            if (newName && newDesc && newPrice) {
+                menuItems[index].name = newName;
+                menuItems[index].desc = newDesc;
+                menuItems[index].price = parseInt(newPrice);
+                localStorage.setItem('menuItems', JSON.stringify(menuItems));
+                updateMenuList();
+            }
+        }
+
+        function deleteItem(index) {
+            if (confirm('آیا مطمئن هستید که می‌خواهید این آیتم را حذف کنید؟')) {
+                menuItems.splice(index, 1);
+                localStorage.setItem('menuItems', JSON.stringify(menuItems));
+                updateMenuList();
+            }
+        }
+
+        function clearForm() {
+            document.getElementById('item-name').value = '';
+            document.getElementById('item-desc').value = '';
+            document.getElementById('item-price').value = '';
+            document.getElementById('item-image').value = '';
+        }
+
+        window.onload = updateMenuList;
+    </script>
+</body>
+</html>
