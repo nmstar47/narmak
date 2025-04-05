@@ -1,0 +1,462 @@
+<!DOCTYPE html>
+<html lang="fa" dir="rtl">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device providence-width, initial-scale=1.0">
+    <title>منوی جگرسرای نارمک</title>
+    <link href="https://fonts.googleapis.com/css2?family=Vazirmatn:wght@400;700&display=swap" rel="stylesheet">
+    <script src="https://kit.fontawesome.com/bb6b134859.js" crossorigin="anonymous"></script>
+    <style>
+        /* استایل کلی */
+        body {
+            background-color: #000000;
+            color: #fff;
+            margin: 0;
+            padding: 0;
+            font-family: 'Vazirmatn', sans-serif;
+            overflow-x: hidden;
+        }
+
+        .menu-container {
+            max-width: 900px;
+            margin: 40px auto;
+            padding: 30px;
+            background-color: #212121;
+            border: 8px solid #212121;
+            border-radius: 20px;
+            box-shadow: 0 0 30px rgba(0, 0, 0, 0.5);
+            animation: slideIn 1s ease-out;
+        }
+
+        /* هدر */
+        header {
+            text-align: center;
+            padding-bottom: 20px;
+        }
+
+        .logo-container {
+            position: relative;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            margin-bottom: 20px;
+        }
+
+        .logo {
+            max-width: 200px;
+            height: auto;
+            border-radius: 30px;
+            transition: transform 0.3s ease;
+        }
+
+        .logo:hover {
+            transform: scale(1.1);
+        }
+
+        h1 {
+            color: #a52a2a;
+            font-size: 70px;
+            font-weight: 700;
+            animation: fadeIn 1s ease-out;
+            margin: 0;
+        }
+
+        .image {
+            max-width: 100%;
+            width: 100%;
+            height: auto;
+            border-radius: 20px;
+            transition: transform 0.3s ease;
+        }
+
+        /* دسته‌بندی‌ها */
+        .menu-category {
+            margin-bottom: 40px;
+        }
+
+        .menu-category h2 {
+            color: #a52a2a;
+            font-size: 30px;
+            text-align: center;
+            margin-bottom: 20px;
+            cursor: pointer;
+            animation: fadeIn 1s ease-out;
+            transition: color 0.3s ease;
+            background-color: #3E2723;
+            padding: 10px;
+            border-radius: 15px;
+        }
+
+        .menu-category h2:hover {
+            color: #d32f2f;
+        }
+
+        .menu-items {
+            max-height: 0;
+            overflow: hidden;
+            transition: max-height 0.5s ease-in-out;
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+            gap: 20px;
+        }
+
+        .menu-category.active .menu-items {
+            max-height: 1000px;
+            padding: 10px 0;
+            overflow-y: auto;
+        }
+
+        .menu-item {
+            background-color: #3E2723;
+            padding: 15px;
+            border-radius: 15px;
+            text-align: center;
+            transition: transform 0.3s ease, box-shadow 0.3s ease;
+            box-shadow: 0 0 15px rgba(0, 0, 0, 0.3);
+            animation: fadeIn 1s ease-out;
+        }
+
+        .menu-item:hover {
+            transform: scale(1.05);
+            box-shadow: 0 0 25px #a52a2a, 0 0 30px rgba(0, 0, 0, 0.2);
+            animation: bounce 0.5s ease-in-out;
+        }
+
+        .menu-item img {
+            width: 100%;
+            height: 150px;
+            object-fit: cover;
+            border-radius: 10px;
+            margin-bottom: 10px;
+            transition: transform 0.3s ease-in-out;
+        }
+
+        .menu-item img:hover {
+            transform: scale(1.05);
+        }
+
+        .menu-item h3 {
+            font-size: 20px;
+            font-weight: 700;
+            margin: 5px 0;
+        }
+
+        .menu-item p {
+            font-size: 14px;
+            color: #ccc;
+            margin: 5px 0;
+        }
+
+        .price {
+            display: inline-block;
+            background: linear-gradient(45deg, #ff6f61, #ffb347);
+            background-size: 200% 200%;
+            color: #fff1c6;
+            padding: 5px 15px;
+            border-radius: 20px;
+            font-weight: bold;
+            cursor: pointer;
+            margin-top: 10px;
+            transition: background-color 0.3s, transform 0.3s;
+            animation: shimmer 1.5s ease-in-out infinite;
+            border: none;
+        }
+
+        .price:hover {
+            background-color: #d32f2f;
+            transform: scale(1.1);
+            box-shadow: 0 0 15px rgba(255, 87, 34, 0.8);
+        }
+
+        /* سبد خرید */
+        .cart-container {
+            margin-top: 30px;
+            padding: 20px;
+            background-color: #3E2723;
+            border-radius: 15px;
+            animation: fadeIn 1s ease-out;
+        }
+
+        .cart-container h2 {
+            font-size: 24px;
+            font-weight: 700;
+            color: #a52a2a;
+            text-align: center;
+            margin-bottom: 15px;
+        }
+
+        .cart-item {
+            background-color: #3E2723;
+            padding: 10px;
+            border-radius: 15px;
+            text-align: center;
+            transition: transform 0.3s ease, box-shadow 0.3s ease;
+            box-shadow: 0 0 15px rgba(0, 0, 0, 0.3);
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin: 10px 0;
+        }
+
+        .cart-item:hover {
+            transform: scale(1.05);
+            box-shadow: 0 0 25px #a52a2a, 0 0 30px rgba(0, 0, 0, 0.2);
+        }
+
+        .decrease, .increase, .remove {
+            display: inline-block;
+            background: linear-gradient(45deg, #ff6f61, #ffb347);
+            background-size: 200% 200%;
+            color: #fff;
+            padding: 5px 10px;
+            border-radius: 20px;
+            font-weight: bold;
+            cursor: pointer;
+            transition: background-color 0.3s, transform 0.3s;
+            animation: shimmer 1.5s ease-in-out infinite;
+            border: none;
+            margin: 0 5px;
+        }
+
+        .decrease:hover, .increase:hover, .remove:hover {
+            background-color: #d32f2f;
+            transform: scale(1.1);
+            box-shadow: 0 0 15px rgba(255, 87, 34, 0.8);
+        }
+
+        .total-price {
+            font-size: 20px;
+            color: #fff;
+            text-align: center;
+            margin-top: 15px;
+        }
+
+        .parent {
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            height: 10vh;
+            animation: fadeIn 1s ease-out;
+        }
+
+        .tak {
+            text-align: center;
+            text-decoration: none;
+            color: #ccc;
+            border-radius: 15px;
+            background-color: #ca3838;
+            padding: 10px 20px;
+            border: solid 2px #ca3838;
+            transition: transform 0.3s ease, background-color 0.3s ease;
+            font-weight: bold;
+            animation: fadeIn 1s ease-out;
+        }
+
+        .tak:hover {
+            transform: translateY(-5px);
+            background-color: #d32f2f;
+        }
+
+        /* انیمیشن‌ها */
+        @keyframes fadeIn {
+            from { opacity: 0; transform: translateY(-20px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+
+        @keyframes bounce {
+            0% { transform: translateY(0); }
+            50% { transform: translateY(-10px); }
+            100% { transform: translateY(0); }
+        }
+
+        @keyframes slideIn {
+            from { transform: translateX(100%); opacity: 0; }
+            to { transform: translateX(0); opacity: 1; }
+        }
+
+        @keyframes shimmer {
+            0% { background-position: -100%; }
+            to { background-position: 100%; }
+        }
+    </style>
+</head>
+<body>
+    <div class="menu-container">
+        <header>
+            <div class="logo-container">
+                <img class="logo" src="6f41a536-6749-4435-9b8f-77877cd19528.jpg" alt="لوگوی جگرسرای نارمک">
+            </div>
+            <h1>جگر سرای نارمک</h1>
+            <img class="image" src="photo_5998939822468744377_y.jpg" alt="not found">
+        </header>
+
+        <!-- دسته‌بندی کباب‌ها -->
+        <section class="menu-category">
+            <h2 onclick="toggleCategory('kebabs')">کباب‌ها</h2>
+            <div class="menu-items" id="kebabs">
+                <div class="menu-item">
+                    <img src="photo_5998939822468744405_y (1).jpg" alt="جگر تازه">
+                    <h3>جگر کبابی</h3>
+                    <p>جگر گوسفندی تازه، زغالی با نون داغ</p>
+                    <input class="price" type="button" value="70,000 تومان" onclick="addToCart('جگر کبابی', '70,000')">
+                </div>
+                <div class="menu-item">
+                    <img src="دل-و-جگر-و-چه-جوری-کباب-کنیم-که-شکم-رو-خوش-2.jpg" alt="دل و قلوه">
+                    <h3>دل و قلوه</h3>
+                    <p>ترکیب دل و قلوه، حسابی ادویه‌دار</p>
+                    <input class="price" type="button" value="65,000 تومان" onclick="addToCart('دل و قلوه', '65,000')">
+                </div>
+                <div class="menu-item">
+                    <img src="کباب_های_ایران_اتاقک_-5.webp" alt="کباب کوبیده">
+                    <h3>کباب کوبیده</h3>
+                    <p>گوشت راسته گوسفندی، آب‌دار و زغالی</p>
+                    <input class="price" type="button" value="90,000 تومان" onclick="addToCart('کباب کوبیده', '90,000')">
+                </div>
+                <div class="menu-item">
+                    <img src="high-angle-tasty-kebab-slate-with-other-dish-tomatoes-1-1024x683.jpg" alt="چنجه">
+                    <h3>چنجه گوسفندی</h3>
+                    <p>گوشت تازه گوسفندی، زغالی و لذیذ</p>
+                    <input class="price" type="button" value="100,000 تومان" onclick="addToCart('چنجه گوسفندی', '100,000')">
+                </div>
+            </div>
+        </section>
+
+        <!-- دسته‌بندی نوشیدنی‌ها -->
+        <section class="menu-category">
+            <h2 onclick="toggleCategory('drinks')">نوشیدنی‌ها</h2>
+            <div class="menu-items" id="drinks">
+                <div class="menu-item">
+                    <img src="50761______thb.jpg" alt="دوغ محلی">
+                    <h3>دوغ محلی</h3>
+                    <p>دوغ خنک و گوارا، با نعنا و پونه</p>
+                    <input class="price" type="button" value="15,000 تومان" onclick="addToCart('دوغ محلی', '15,000')">
+                </div>
+                <div class="menu-item">
+                    <img src="605541_2000.jpg" alt="نوشابه">
+                    <h3>نوشابه</h3>
+                    <p>نوشابه خنک، انتخابی کلاسیک</p>
+                    <input class="price" type="button" value="10,000 تومان" onclick="addToCart('نوشابه', '10,000')">
+                </div>
+                <div class="menu-item">
+                    <img src="1111.jpeg" alt="چای">
+                    <h3>چای دمی</h3>
+                    <p>چای تازه‌دم، گرم و معطر</p>
+                    <input class="price" type="button" value="12,000 تومان" onclick="addToCart('چای دمی', '12,000')">
+                </div>
+            </div>
+        </section>
+
+        <!-- دسته‌بندی پیش‌غذا -->
+        <section class="menu-category">
+            <h2 onclick="toggleCategory('appetizers')">پیش‌غذا</h2>
+            <div class="menu-items" id="appetizers">
+                <div class="menu-item">
+                    <img src="xboicd4cdtz4.webp" alt="سوپ">
+                    <h3>سوپ</h3>
+                    <p>جو، ادویه، سبزیجات</p>
+                    <input class="price" type="button" value="20,000 تومان" onclick="addToCart('سوپ', '20,000')">
+                </div>
+                <div class="menu-item">
+                    <img src="ax-14.jpg" alt="نان و پنیر">
+                    <h3>نان و پنیر و سبزی</h3>
+                    <p>نان تازه، پنیر محلی و سبزی</p>
+                    <input class="price" type="button" value="25,000 تومان" onclick="addToCart('نان و پنیر و سبزی', '25,000')">
+                </div>
+                <div class="menu-item">
+                    <img src="93498jse5.jpg" alt="ترشی">
+                    <h3>ترشی خانگی</h3>
+                    <p>ترشی مخلوط، تند و خوشمزه</p>
+                    <input class="price" type="button" value="15,000 تومان" onclick="addToCart('ترشی خانگی', '15,000')">
+                </div>
+            </div>
+        </section>
+
+        <!-- سبد خرید -->
+        <div class="cart-container">
+            <h2>سبد خرید</h2>
+            <div id="cart-items"></div>
+            <p class="total-price" id="total-price">مجموع: 0 تومان</p>
+            <div class="parent">
+                <a href="#" class="tak">تکمیل خرید!</a>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        function addToCart(name, price) {
+            let cart = JSON.parse(localStorage.getItem('cart')) || [];
+            let existingItem = cart.find(item => item.name === name);
+            if (existingItem) {
+                existingItem.quantity += 1;
+            } else {
+                cart.push({ name, price: parseInt(price.replace(/,/g, '')), quantity: 1 });
+            }
+            localStorage.setItem('cart', JSON.stringify(cart));
+            updateCart();
+        }
+
+        function updateCart() {
+            let cart = JSON.parse(localStorage.getItem('cart')) || [];
+            let cartContainer = document.getElementById('cart-items');
+            let totalPrice = document.getElementById('total-price');
+            cartContainer.innerHTML = '';
+            let total = 0;
+            cart.forEach((item, index) => {
+                let div = document.createElement('div');
+                div.classList.add('cart-item');
+                div.innerHTML = `${item.name} - ${item.price.toLocaleString()} تومان ` +
+                                `<button class='decrease' onclick='decreaseQuantity(${index})'>-</button> ` +
+                                `${item.quantity} ` +
+                                `<button class='increase' onclick='increaseQuantity(${index})'>+</button> ` +
+                                `<button class='remove' onclick='removeFromCart(${index})'>حذف</button>`;
+                cartContainer.appendChild(div);
+                total += item.price * item.quantity;
+            });
+            totalPrice.innerText = `مجموع: ${total.toLocaleString()} تومان`;
+        }
+
+        function increaseQuantity(index) {
+            let cart = JSON.parse(localStorage.getItem('cart')) || [];
+            cart[index].quantity += 1;
+            localStorage.setItem('cart', JSON.stringify(cart));
+            updateCart();
+        }
+
+        function decreaseQuantity(index) {
+            let cart = JSON.parse(localStorage.getItem('cart')) || [];
+            if (cart[index].quantity > 1) {
+                cart[index].quantity -= 1;
+            } else {
+                cart.splice(index, 1);
+            }
+            localStorage.setItem('cart', JSON.stringify(cart));
+            updateCart();
+        }
+
+        function removeFromCart(index) {
+            let cart = JSON.parse(localStorage.getItem('cart')) || [];
+            cart.splice(index, 1);
+            localStorage.setItem('cart', JSON.stringify(cart));
+            updateCart();
+        }
+
+        function toggleCategory(categoryId) {
+            let category = document.getElementById(categoryId);
+            let parent = category.parentElement;
+            if (parent.classList.contains('active')) {
+                parent.classList.remove('active');
+                category.style.maxHeight = '0px';
+            } else {
+                document.querySelectorAll('.menu-category').forEach(cat => {
+                    cat.classList.remove('active');
+                    cat.querySelector('.menu-items').style.maxHeight = '0px';
+                });
+                parent.classList.add('active');
+                category.style.maxHeight = category.scrollHeight + 'px';
+            }
+        }
+
+        window.onload = updateCart;
+    </script>
+</body>
+</html>
