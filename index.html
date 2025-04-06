@@ -310,6 +310,39 @@
             from { opacity: 0; transform: translateY(20px); }
             to { opacity: 1; transform: translateY(0); }
         }
+
+        /* بهینه‌سازی برای موبایل */
+        @media only screen and (max-width: 600px) {
+            .auth-buttons {
+                position: static; /* حذف موقعیت مطلق توی موبایل */
+                transform: none; /* حذف ترنسفورم */
+                margin: 20px auto; /* فاصله از بالا و وسط‌چین کردن */
+                width: 90%; /* عرض مناسب برای موبایل */
+                max-width: 250px; /* محدودیت عرض */
+                padding: 15px; /* کاهش پدینگ برای موبایل */
+            }
+
+            .auth-btn {
+                padding: 10px 15px; /* کمی کوچکتر کردن دکمه‌ها */
+                font-size: 14px; /* کاهش اندازه فونت */
+            }
+
+            header {
+                padding-bottom: 0; /* تنظیم فاصله هدر */
+            }
+
+            .logo-container {
+                margin-bottom: 10px; /* کاهش فاصله لوگو */
+            }
+
+            h1 {
+                font-size: 40px; /* کاهش اندازه عنوان توی موبایل */
+            }
+
+            .image {
+                margin-bottom: 20px; /* فاصله تصویر از دکمه‌ها */
+            }
+        }
     </style>
 </head>
 <body>
