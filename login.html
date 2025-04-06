@@ -91,6 +91,21 @@
         }
     </style>
 </head>
+<script>
+    document.querySelector('a').addEventListener('click', function(e) {
+    e.preventDefault();
+    let name = document.querySelector('input[name="name"]').value;
+    let phone = document.querySelector('input[name="phone_number"]').value;
+    let password = document.querySelector('input[name="password"]').value;
+    
+    if (phone.length === 11 && password.length >= 8) {
+        localStorage.setItem('user', JSON.stringify({ name, phone }));
+        window.location.href = 'mano.html';
+    } else {
+        alert('لطفاً اطلاعات رو درست وارد کن!');
+    }
+});
+</script>
 <body>
     <div class="container">
         <div class="jigar-icon">🍖</div> <!-- Liver/Meat emoji as a fun touch -->
