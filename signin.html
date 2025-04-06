@@ -1,0 +1,122 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Jigarki Sign Up</title>
+    <style>
+        body {
+            background-color: #000000;
+            color: #fff;
+            margin: 0;
+            padding: 0;
+            font-family: 'Vazirmatn', sans-serif;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            min-height: 100vh;
+        }
+        .container {
+            background: rgba(62, 39, 35, 0.1); /* Subtle frosted glass effect */
+            backdrop-filter: blur(10px); /* iOS blur */
+            border-radius: 20px; /* iOS-style rounded corners */
+            padding: 20px;
+            width: 90%;
+            max-width: 350px;
+            box-shadow: 0 4px 30px rgba(0, 0, 0, 0.5);
+            border: 1px solid rgba(255, 255, 255, 0.1);
+        }
+        h1 {
+            color: #a52a2a; /* Liver-red tone */
+            text-align: center;
+            font-size: 40px;
+            margin-bottom: 10px;
+            animation: fadeIn 1s ease-out;
+        }
+        .subtitle {
+            text-align: center;
+            font-size: 19px;
+            color: #ccc;
+            margin-bottom: 20px;
+        }
+        .input-group {
+            margin: 15px 0;
+        }
+        label {
+            font-size: 18px;
+            color: #fff;
+            margin-bottom: 5px;
+            display: block;
+        }
+        input {
+            width: 100%;
+            padding: 12px;
+            background-color: #3E2723; /* Brownish liver tone */
+            border: none;
+            border-radius: 12px; /* Softer iOS-like corners */
+            color: #fff;
+            font-size: 16px;
+            outline: none;
+            box-sizing: border-box;
+            transition: all 0.3s ease; /* Smooth iOS transition */
+        }
+        input:focus {
+            background-color: #4E342E;
+            box-shadow: 0 0 5px rgba(165, 42, 42, 0.5);
+        }
+        .jigar-icon {
+            text-align: center;
+            font-size: 50px;
+            color: #a52a2a;
+            margin-bottom: 20px;
+        }
+        @keyframes fadeIn {
+            from { opacity: 0; }
+            to { opacity: 1; }
+        }
+        a {
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            margin-left: 110px;
+            margin-right: 110px;
+            color: #fff;
+            background-color: #c82525;
+            font-size: 18px;
+            border-radius: 20px;
+            padding: 10px;
+            text-decoration: none;
+            padding-right: 20px;
+            padding-left: 20px;
+            transition: background-color 0.3s ease; /* iOS-like button feedback */
+        }
+        a:hover {
+            background-color: #a52a2a; /* Darker red on hover */
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <div class="jigar-icon">🍖</div> <!-- Liver/Meat emoji for theme -->
+        <h1>ثبت نام</h1>
+        <p class="subtitle">به جمع جگرخورها بپیوند!</p>
+        <div class="input-group">
+            <label>نام:</label>
+            <input type="text" name="first_name" placeholder="مثال: علی" required>
+        </div>
+        <div class="input-group">
+            <label>فامیل:</label>
+            <input type="text" name="last_name" placeholder="مثال: احمدی" required>
+        </div>
+        <div class="input-group">
+            <label>ایمیل (اختیاری):</label>
+            <input type="email" name="email" placeholder="مثال: ali@example.com">
+        </div>
+        <div class="input-group">
+            <label>رمز عبور:</label>
+            <input type="password" name="password" placeholder="Alibgh1234" required>
+        </div>
+        <a href="mano.html">ثبت نام</a>
+    </div>
+</body>
+</html>
