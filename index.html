@@ -2,7 +2,7 @@
 <html lang="fa" dir="rtl">
 <head>
     <meta charset="UTF-8">
-    <meta name="viewport" content="width=device providence-width, initial-scale=1.0">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>منوی جگرسرای نارمک</title>
     <link href="https://fonts.googleapis.com/css2?family=Vazirmatn:wght@400;700&display=swap" rel="stylesheet">
     <script src="https://kit.fontawesome.com/bb6b134859.js" crossorigin="anonymous"></script>
@@ -22,20 +22,27 @@
             margin: 40px auto;
             padding: 30px;
             background-color: #212121;
-            border: 8px solid #212121;
             border-radius: 20px;
-            box-shadow: 0 0 30px rgba(0, 0, 0, 0.5);
-            animation: slideIn 1s ease-out;
+            box-shadow: 0 4px 20px rgba(0, 0, 0, 0.5);
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            transition: transform 0.3s ease-in-out;
+        }
+
+        .menu-container:hover {
+            transform: translateY(-5px);
         }
 
         /* هدر */
         header {
             text-align: center;
             padding-bottom: 20px;
+            width: 100%;
+            position: relative;
         }
 
         .logo-container {
-            position: relative;
             display: flex;
             justify-content: center;
             align-items: center;
@@ -50,15 +57,16 @@
         }
 
         .logo:hover {
-            transform: scale(1.1);
+            transform: scale(1.05);
         }
 
         h1 {
             color: #a52a2a;
-            font-size: 70px;
+            font-size: 50px;
             font-weight: 700;
-            animation: fadeIn 1s ease-out;
             margin: 0;
+            opacity: 0;
+            animation: fadeIn 0.8s ease-out forwards;
         }
 
         .image {
@@ -69,9 +77,47 @@
             transition: transform 0.3s ease;
         }
 
+        /* دکمه‌های ورود و ثبت‌نام */
+        .auth-buttons {
+            position: absolute;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+            display: flex;
+            flex-direction: column;
+            gap: 20px;
+            width: 100%;
+            max-width: 300px;
+            background: rgba(62, 39, 35, 0.2); /* افکت شیشه‌ای خفن */
+            backdrop-filter: blur(10px); /* حس iOS */
+            padding: 20px;
+            border-radius: 20px;
+            box-shadow: 0 4px 20px rgba(165, 42, 42, 0.3);
+        }
+
+        .auth-btn {
+            background: linear-gradient(45deg, #ff6f61, #ffb347);
+            color: #fff1c6;
+            padding: 12px 20px;
+            border-radius: 20px;
+            border: none;
+            font-size: 16px;
+            font-weight: bold;
+            cursor: pointer;
+            transition: transform 0.2s ease, box-shadow 0.2s ease;
+            text-decoration: none;
+            text-align: center;
+        }
+
+        .auth-btn:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 4px 15px rgba(255, 87, 34, 0.6);
+        }
+
         /* دسته‌بندی‌ها */
         .menu-category {
             margin-bottom: 40px;
+            width: 100%;
         }
 
         .menu-category h2 {
@@ -80,30 +126,29 @@
             text-align: center;
             margin-bottom: 20px;
             cursor: pointer;
-            animation: fadeIn 1s ease-out;
-            transition: color 0.3s ease;
             background-color: #3E2723;
             padding: 10px;
             border-radius: 15px;
+            transition: background-color 0.3s ease, color 0.3s ease;
         }
 
         .menu-category h2:hover {
             color: #d32f2f;
+            background-color: #4E342E;
         }
 
         .menu-items {
             max-height: 0;
             overflow: hidden;
             transition: max-height 0.5s ease-in-out;
-            display: grid;
-            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+            display: flex;
+            flex-direction: column;
             gap: 20px;
         }
 
         .menu-category.active .menu-items {
-            max-height: 1000px;
+            max-height: 2000px;
             padding: 10px 0;
-            overflow-y: auto;
         }
 
         .menu-item {
@@ -111,28 +156,31 @@
             padding: 15px;
             border-radius: 15px;
             text-align: center;
-            transition: transform 0.3s ease, box-shadow 0.3s ease;
-            box-shadow: 0 0 15px rgba(0, 0, 0, 0.3);
-            animation: fadeIn 1s ease-out;
+            transition: transform 0.2s ease, box-shadow 0.2s ease;
+            box-shadow: 0 2px 10px rgba(0, 0, 0, 0.3);
+            opacity: 0;
+            animation: slideUp 0.5s ease-out forwards;
+            display: flex;
+            flex-direction: row;
+            align-items: center;
+            gap: 15px;
         }
 
         .menu-item:hover {
-            transform: scale(1.05);
-            box-shadow: 0 0 25px #a52a2a, 0 0 30px rgba(0, 0, 0, 0.2);
-            animation: bounce 0.5s ease-in-out;
+            transform: translateY(-3px);
+            box-shadow: 0 4px 20px rgba(165, 42, 42, 0.5);
         }
 
         .menu-item img {
-            width: 100%;
-            height: 150px;
+            width: 100px; /* اندازه کوچک‌تر و مشخص */
+            height: 100px;
             object-fit: cover;
             border-radius: 10px;
-            margin-bottom: 10px;
-            transition: transform 0.3s ease-in-out;
+            transition: transform 0.3s ease;
         }
 
         .menu-item img:hover {
-            transform: scale(1.05);
+            transform: scale(1.03);
         }
 
         .menu-item h3 {
@@ -150,22 +198,19 @@
         .price {
             display: inline-block;
             background: linear-gradient(45deg, #ff6f61, #ffb347);
-            background-size: 200% 200%;
             color: #fff1c6;
-            padding: 5px 15px;
+            padding: 8px 15px;
             border-radius: 20px;
             font-weight: bold;
             cursor: pointer;
             margin-top: 10px;
-            transition: background-color 0.3s, transform 0.3s;
-            animation: shimmer 1.5s ease-in-out infinite;
+            transition: transform 0.2s ease, box-shadow 0.2s ease;
             border: none;
         }
 
         .price:hover {
-            background-color: #d32f2f;
-            transform: scale(1.1);
-            box-shadow: 0 0 15px rgba(255, 87, 34, 0.8);
+            transform: translateY(-2px);
+            box-shadow: 0 4px 15px rgba(255, 87, 34, 0.6);
         }
 
         /* سبد خرید */
@@ -174,7 +219,12 @@
             padding: 20px;
             background-color: #3E2723;
             border-radius: 15px;
-            animation: fadeIn 1s ease-out;
+            width: 100%;
+            transition: transform 0.3s ease;
+        }
+
+        .cart-container:hover {
+            transform: translateY(-3px);
         }
 
         .cart-container h2 {
@@ -190,38 +240,32 @@
             padding: 10px;
             border-radius: 15px;
             text-align: center;
-            transition: transform 0.3s ease, box-shadow 0.3s ease;
-            box-shadow: 0 0 15px rgba(0, 0, 0, 0.3);
-            display: flex;
-            justify-content: space-between;
-            align-items: center;
+            transition: transform 0.2s ease, box-shadow 0.2s ease;
+            box-shadow: 0 2px 10px rgba(0, 0, 0, 0.3);
             margin: 10px 0;
         }
 
         .cart-item:hover {
-            transform: scale(1.05);
-            box-shadow: 0 0 25px #a52a2a, 0 0 30px rgba(0, 0, 0, 0.2);
+            transform: translateY(-3px);
+            box-shadow: 0 4px 20px rgba(165, 42, 42, 0.5);
         }
 
         .decrease, .increase, .remove {
             display: inline-block;
             background: linear-gradient(45deg, #ff6f61, #ffb347);
-            background-size: 200% 200%;
             color: #fff;
             padding: 5px 10px;
             border-radius: 20px;
             font-weight: bold;
             cursor: pointer;
-            transition: background-color 0.3s, transform 0.3s;
-            animation: shimmer 1.5s ease-in-out infinite;
+            transition: transform 0.2s ease, box-shadow 0.2s ease;
             border: none;
             margin: 0 5px;
         }
 
         .decrease:hover, .increase:hover, .remove:hover {
-            background-color: #d32f2f;
-            transform: scale(1.1);
-            box-shadow: 0 0 15px rgba(255, 87, 34, 0.8);
+            transform: translateY(-2px);
+            box-shadow: 0 4px 15px rgba(255, 87, 34, 0.6);
         }
 
         .total-price {
@@ -235,8 +279,7 @@
             display: flex;
             justify-content: center;
             align-items: center;
-            height: 10vh;
-            animation: fadeIn 1s ease-out;
+            margin-top: 20px;
         }
 
         .tak {
@@ -245,38 +288,27 @@
             color: #ccc;
             border-radius: 15px;
             background-color: #ca3838;
-            padding: 10px 20px;
-            border: solid 2px #ca3838;
-            transition: transform 0.3s ease, background-color 0.3s ease;
+            padding: 12px 20px;
+            border: none;
+            transition: transform 0.2s ease, background-color 0.2s ease;
             font-weight: bold;
-            animation: fadeIn 1s ease-out;
         }
 
         .tak:hover {
-            transform: translateY(-5px);
+            transform: translateY(-3px);
             background-color: #d32f2f;
+            box-shadow: 0 4px 15px rgba(211, 47, 47, 0.6);
         }
 
-        /* انیمیشن‌ها */
+        /* انیمیشن‌های iOS */
         @keyframes fadeIn {
-            from { opacity: 0; transform: translateY(-20px); }
+            from { opacity: 0; }
+            to { opacity: 1; }
+        }
+
+        @keyframes slideUp {
+            from { opacity: 0; transform: translateY(20px); }
             to { opacity: 1; transform: translateY(0); }
-        }
-
-        @keyframes bounce {
-            0% { transform: translateY(0); }
-            50% { transform: translateY(-10px); }
-            100% { transform: translateY(0); }
-        }
-
-        @keyframes slideIn {
-            from { transform: translateX(100%); opacity: 0; }
-            to { transform: translateX(0); opacity: 1; }
-        }
-
-        @keyframes shimmer {
-            0% { background-position: -100%; }
-            to { background-position: 100%; }
         }
     </style>
 </head>
@@ -286,43 +318,13 @@
             <div class="logo-container">
                 <img class="logo" src="6f41a536-6749-4435-9b8f-77877cd19528.jpg" alt="لوگوی جگرسرای نارمک">
             </div>
-            <div class="auth-buttons">
-                <a href="login.html" class="auth-btn" id="login-btn">ورود</a>
-                <a href="index.html" class="auth-btn" id="logout-btn" style="display: none;">خروج</a>
-            </div>
-            
-            <style>
-                a{
-                    text-decoration: none;
-                }
-                .auth-buttons {
-                    display: flex;
-                    justify-content: center;
-                    gap: 15px;
-                    margin-top: 20px;
-                }
-            
-                .auth-btn {
-                    background: linear-gradient(45deg, #ff6f61, #ffb347);
-                    background-size: 200% 200%;
-                    color: #fff1c6;
-                    padding: 10px 20px;
-                    border-radius: 20px;
-                    border: none;
-                    font-size: 16px;
-                    font-weight: bold;
-                    cursor: pointer;
-                    transition: transform 0.3s ease, box-shadow 0.3s ease;
-                    animation: shimmer 1.5s ease-in-out infinite;
-                }
-            
-                .auth-btn:hover {
-                    transform: scale(1.05);
-                    box-shadow: 0 0 15px rgba(255, 87, 34, 0.8);
-                }
-            </style>
             <h1>جگر سرای نارمک</h1>
             <img class="image" src="photo_5998939822468744377_y.jpg" alt="not found">
+            <div class="auth-buttons">
+                <a href="login.html" class="auth-btn" id="login-btn">ورود</a>
+                <a href="signin.html" class="auth-btn" id="signin-btn">ثبت نام</a>
+                <a href="index.html" class="auth-btn" id="logout-btn" style="display: none;">خروج</a>
+            </div>
         </header>
 
         <!-- دسته‌بندی کباب‌ها -->
@@ -331,27 +333,35 @@
             <div class="menu-items" id="kebabs">
                 <div class="menu-item">
                     <img src="photo_5998939822468744405_y (1).jpg" alt="جگر تازه">
-                    <h3>جگر کبابی</h3>
-                    <p>جگر گوسفندی تازه، زغالی با نون داغ</p>
-                    <input class="price" type="button" value="70,000 تومان" onclick="addToCart('جگر کبابی', '70,000')">
+                    <div>
+                        <h3>جگر کبابی</h3>
+                        <p>جگر گوسفندی تازه، زغالی با نون داغ</p>
+                        <input class="price" type="button" value="70,000 تومان" onclick="addToCart('جگر کبابی', '70,000')">
+                    </div>
                 </div>
                 <div class="menu-item">
                     <img src="دل-و-جگر-و-چه-جوری-کباب-کنیم-که-شکم-رو-خوش-2.jpg" alt="دل و قلوه">
-                    <h3>دل و قلوه</h3>
-                    <p>ترکیب دل و قلوه، حسابی ادویه‌دار</p>
-                    <input class="price" type="button" value="65,000 تومان" onclick="addToCart('دل و قلوه', '65,000')">
+                    <div>
+                        <h3>دل و قلوه</h3>
+                        <p>ترکیب دل و قلوه، حسابی ادویه‌دار</p>
+                        <input class="price" type="button" value="65,000 تومان" onclick="addToCart('دل و قلوه', '65,000')">
+                    </div>
                 </div>
                 <div class="menu-item">
                     <img src="کباب_های_ایران_اتاقک_-5.webp" alt="کباب کوبیده">
-                    <h3>کباب کوبیده</h3>
-                    <p>گوشت راسته گوسفندی، آب‌دار و زغالی</p>
-                    <input class="price" type="button" value="90,000 تومان" onclick="addToCart('کباب کوبیده', '90,000')">
+                    <div>
+                        <h3>کباب کوبیده</h3>
+                        <p>گوشت راسته گوسفندی، آب‌دار و زغالی</p>
+                        <input class="price" type="button" value="90,000 تومان" onclick="addToCart('کباب کوبیده', '90,000')">
+                    </div>
                 </div>
                 <div class="menu-item">
                     <img src="high-angle-tasty-kebab-slate-with-other-dish-tomatoes-1-1024x683.jpg" alt="چنجه">
-                    <h3>چنجه گوسفندی</h3>
-                    <p>گوشت تازه گوسفندی، زغالی و لذیذ</p>
-                    <input class="price" type="button" value="100,000 تومان" onclick="addToCart('چنجه گوسفندی', '100,000')">
+                    <div>
+                        <h3>چنجه گوسفندی</h3>
+                        <p>گوشت تازه گوسفندی، زغالی و لذیذ</p>
+                        <input class="price" type="button" value="100,000 تومان" onclick="addToCart('چنجه گوسفندی', '100,000')">
+                    </div>
                 </div>
             </div>
         </section>
@@ -362,21 +372,27 @@
             <div class="menu-items" id="drinks">
                 <div class="menu-item">
                     <img src="50761______thb.jpg" alt="دوغ محلی">
-                    <h3>دوغ محلی</h3>
-                    <p>دوغ خنک و گوارا، با نعنا و پونه</p>
-                    <input class="price" type="button" value="15,000 تومان" onclick="addToCart('دوغ محلی', '15,000')">
+                    <div>
+                        <h3>دوغ محلی</h3>
+                        <p>دوغ خنک و گوارا، با نعنا و پونه</p>
+                        <input class="price" type="button" value="15,000 تومان" onclick="addToCart('دوغ محلی', '15,000')">
+                    </div>
                 </div>
                 <div class="menu-item">
                     <img src="605541_2000.jpg" alt="نوشابه">
-                    <h3>نوشابه</h3>
-                    <p>نوشابه خنک، انتخابی کلاسیک</p>
-                    <input class="price" type="button" value="10,000 تومان" onclick="addToCart('نوشابه', '10,000')">
+                    <div>
+                        <h3>نوشابه</h3>
+                        <p>نوشابه خنک، انتخابی کلاسیک</p>
+                        <input class="price" type="button" value="10,000 تومان" onclick="addToCart('نوشابه', '10,000')">
+                    </div>
                 </div>
                 <div class="menu-item">
                     <img src="1111.jpeg" alt="چای">
-                    <h3>چای دمی</h3>
-                    <p>چای تازه‌دم، گرم و معطر</p>
-                    <input class="price" type="button" value="12,000 تومان" onclick="addToCart('چای دمی', '12,000')">
+                    <div>
+                        <h3>چای دمی</h3>
+                        <p>چای تازه‌دم، گرم و معطر</p>
+                        <input class="price" type="button" value="12,000 تومان" onclick="addToCart('چای دمی', '12,000')">
+                    </div>
                 </div>
             </div>
         </section>
@@ -387,21 +403,27 @@
             <div class="menu-items" id="appetizers">
                 <div class="menu-item">
                     <img src="xboicd4cdtz4.webp" alt="سوپ">
-                    <h3>سوپ</h3>
-                    <p>جو، ادویه، سبزیجات</p>
-                    <input class="price" type="button" value="20,000 تومان" onclick="addToCart('سوپ', '20,000')">
+                    <div>
+                        <h3>سوپ</h3>
+                        <p>جو، ادویه، سبزیجات</p>
+                        <input class="price" type="button" value="20,000 تومان" onclick="addToCart('سوپ', '20,000')">
+                    </div>
                 </div>
                 <div class="menu-item">
                     <img src="ax-14.jpg" alt="نان و پنیر">
-                    <h3>نان و پنیر و سبزی</h3>
-                    <p>نان تازه، پنیر محلی و سبزی</p>
-                    <input class="price" type="button" value="25,000 تومان" onclick="addToCart('نان و پنیر و سبزی', '25,000')">
+                    <div>
+                        <h3>نان و پنیر و سبزی</h3>
+                        <p>نان تازه، پنیر محلی و سبزی</p>
+                        <input class="price" type="button" value="25,000 تومان" onclick="addToCart('نان و پنیر و سبزی', '25,000')">
+                    </div>
                 </div>
                 <div class="menu-item">
                     <img src="93498jse5.jpg" alt="ترشی">
-                    <h3>ترشی خانگی</h3>
-                    <p>ترشی مخلوط، تند و خوشمزه</p>
-                    <input class="price" type="button" value="15,000 تومان" onclick="addToCart('ترشی خانگی', '15,000')">
+                    <div>
+                        <h3>ترشی خانگی</h3>
+                        <p>ترشی مخلوط، تند و خوشمزه</p>
+                        <input class="price" type="button" value="15,000 تومان" onclick="addToCart('ترشی خانگی', '15,000')">
+                    </div>
                 </div>
             </div>
         </section>
@@ -436,17 +458,21 @@
             let totalPrice = document.getElementById('total-price');
             cartContainer.innerHTML = '';
             let total = 0;
-            cart.forEach((item, index) => {
-                let div = document.createElement('div');
-                div.classList.add('cart-item');
-                div.innerHTML = `${item.name} - ${item.price.toLocaleString()} تومان ` +
-                                `<button class='decrease' onclick='decreaseQuantity(${index})'>-</button> ` +
-                                `${item.quantity} ` +
-                                `<button class='increase' onclick='increaseQuantity(${index})'>+</button> ` +
-                                `<button class='remove' onclick='removeFromCart(${index})'>حذف</button>`;
-                cartContainer.appendChild(div);
-                total += item.price * item.quantity;
-            });
+            if (cart.length === 0) {
+                cartContainer.innerHTML = '<p style="text-align: center; color: #ccc;">سبد خرید خالی است!</p>';
+            } else {
+                cart.forEach((item, index) => {
+                    let div = document.createElement('div');
+                    div.classList.add('cart-item');
+                    div.innerHTML = `${item.name} - ${item.price.toLocaleString()} تومان ` +
+                                    `<button class='decrease' onclick='decreaseQuantity(${index})'>-</button> ` +
+                                    `${item.quantity} ` +
+                                    `<button class='increase' onclick='increaseQuantity(${index})'>+</button> ` +
+                                    `<button class='remove' onclick='removeFromCart(${index})'>حذف</button>`;
+                    cartContainer.appendChild(div);
+                    total += item.price * item.quantity;
+                });
+            }
             totalPrice.innerText = `مجموع: ${total.toLocaleString()} تومان`;
         }
 
