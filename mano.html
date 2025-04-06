@@ -511,6 +511,21 @@
                 category.style.maxHeight = category.scrollHeight + 'px';
             }
         }
+        window.onload = function() {
+    updateCart();
+    let user = JSON.parse(localStorage.getItem('user'));
+    if (user) {
+        document.getElementById('login-btn').style.display = 'none';
+        document.getElementById('signin-btn').style.display = 'none';
+        document.getElementById('logout-btn').style.display = 'block';
+        document.querySelector('h1').innerText += ` - خوش اومدی ${user.name}!`;
+    }
+};
+
+document.getElementById('logout-btn').addEventListener('click', function() {
+    localStorage.removeItem('user');
+    location.reload();
+});
 
         window.onload = updateCart;
     </script>
