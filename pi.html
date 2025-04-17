@@ -49,6 +49,64 @@
       margin-bottom: 15px;
     }
 
+    .preview {
+      background: rgba(0, 0, 0, 0.2);
+      border-radius: 10px;
+      padding: 10px;
+      margin-bottom: 15px;
+      min-height: 100px;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      overflow: hidden;
+    }
+
+    .preview-button {
+      padding: 8px 16px;
+      background: #007aff;
+      color: #ffffff;
+      border: none;
+      border-radius: 5px;
+      font-size: 14px;
+      cursor: pointer;
+      transition: background 0.3s ease;
+    }
+
+    .preview-button:hover {
+      background: #005bb5;
+    }
+
+    .preview-form {
+      display: flex;
+      gap: 5px;
+    }
+
+    .preview-form input {
+      padding: 5px;
+      border: none;
+      border-radius: 5px;
+      font-size: 12px;
+    }
+
+    .preview-form button {
+      padding: 5px 10px;
+      background: #007aff;
+      color: #ffffff;
+      border: none;
+      border-radius: 5px;
+      font-size: 12px;
+      cursor: pointer;
+    }
+
+    .preview-header {
+      background: linear-gradient(135deg, #007aff, #005bb5);
+      padding: 10px;
+      color: #ffffff;
+      font-size: 14px;
+      text-align: center;
+      border-radius: 5px;
+    }
+
     .buy-button {
       display: inline-block;
       padding: 6px 14px;
@@ -88,34 +146,49 @@
 
   <section class="hero">
     <h1>Pi - Premium Website Templates & Scripts</h1>
-    <p>Discover ready-to-use website templates and scripts to elevate your digital projects.</p>
+    <p>Discover ready-to-use website components to elevate your digital projects.</p>
   </section>
 
   <main>
     <section class="pi-grid">
       <div class="pi-card">
-        <h3>Business Landing Page</h3>
-        <p>A responsive HTML/CSS landing page for startups and businesses.</p>
-        <div class="price">300,000 IRR / $10</div>
-        <a href="#" class="buy-button" onclick="addToCart('Business Landing Page', 300000)">Buy</a>
-      </div>
-      <div class="pi-card">
-        <h3>Portfolio Template</h3>
-        <p>A sleek portfolio template for freelancers and creatives.</p>
-        <div class="price">400,000 IRR / $15</div>
-        <a href="#" class="buy-button" onclick="addToCart('Portfolio Template', 400000)">Buy</a>
-      </div>
-      <div class="pi-card">
-        <h3>Contact Form Script</h3>
-        <p>An interactive JavaScript contact form with validation.</p>
+        <h3>Modern Button</h3>
+        <div class="preview">
+          <button class="preview-button">Click Me!</button>
+        </div>
+        <p>A stylish, animated button for websites.</p>
         <div class="price">200,000 IRR / $5</div>
-        <a href="#" class="buy-button" onclick="addToCart('Contact Form Script', 200000)">Buy</a>
+        <a href="#" class="buy-button" onclick="addToCart('Modern Button', 200000)">Buy</a>
       </div>
       <div class="pi-card">
-        <h3>eCommerce Template</h3>
-        <p>A modern eCommerce template with product grid and cart.</p>
-        <div class="price">500,000 IRR / $20</div>
-        <a href="#" class="buy-button" onclick="addToCart('eCommerce Template', 500000)">Buy</a>
+        <h3>Contact Form</h3>
+        <div class="preview">
+          <form class="preview-form">
+            <input type="text" placeholder="Email">
+            <button>Submit</button>
+          </form>
+        </div>
+        <p>A responsive contact form with validation.</p>
+        <div class="price">300,000 IRR / $10</div>
+        <a href="#" class="buy-button" onclick="addToCart('Contact Form', 300000)">Buy</a>
+      </div>
+      <div class="pi-card">
+        <h3>Website Header</h3>
+        <div class="preview">
+          <div class="preview-header">My Awesome Website</div>
+        </div>
+        <p>A modern header with gradient background.</p>
+        <div class="price">400,000 IRR / $15</div>
+        <a href="#" class="buy-button" onclick="addToCart('Website Header', 400000)">Buy</a>
+      </div>
+      <div class="pi-card">
+        <h3>Call-to-Action Section</h3>
+        <div class="preview">
+          <button class="preview-button" style="background: #ff4d4d;">Get Started Now!</button>
+        </div>
+        <p>A vibrant CTA section to boost conversions.</p>
+        <div class="price">250,000 IRR / $8</div>
+        <a href="#" class="buy-button" onclick="addToCart('Call-to-Action Section', 250000)">Buy</a>
       </div>
     </section>
   </main>
