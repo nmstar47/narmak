@@ -6,6 +6,87 @@
   <title>Cloude Buy - Files</title>
   <script src="https://kit.fontawesome.com/bb6b134859.js" crossorigin="anonymous"></script>
   <link rel="stylesheet" href="style.css">
+  <style>
+    /* استایل‌های جدید برای توضیحات و دکمه Buy */
+    .file-card {
+      display: flex;
+      align-items: center;
+      background: rgba(255, 255, 255, 0.1);
+      backdrop-filter: blur(10px);
+      border-radius: 15px;
+      padding: 15px;
+      transition: transform 0.3s ease, box-shadow 0.3s ease;
+      position: relative;
+      cursor: pointer;
+    }
+
+    .file-card:hover {
+      transform: translateY(-5px);
+      box-shadow: 0 8px 20px rgba(0, 0, 0, 0.2);
+    }
+
+    .file-info {
+      flex: 1;
+    }
+
+    .file-info h3 {
+      font-size: 18px;
+      margin-bottom: 5px;
+      color: #ffffff;
+    }
+
+    .file-info p {
+      font-size: 14px;
+      color: #cccccc;
+    }
+
+    .file-details {
+      position: absolute;
+      top: 100%;
+      left: 0;
+      right: 0;
+      background: rgba(0, 0, 0, 0.8);
+      color: #ffffff;
+      padding: 10px;
+      border-radius: 10px;
+      font-size: 14px;
+      opacity: 0;
+      transform: translateY(10px);
+      transition: opacity 0.3s ease, transform 0.3s ease;
+      z-index: 10;
+      pointer-events: none;
+    }
+
+    .file-card:hover .file-details,
+    .file-card.active .file-details {
+      opacity: 1;
+      transform: translateY(0);
+      pointer-events: auto;
+    }
+
+    .buy-button {
+      display: inline-block;
+      padding: 8px 20px;
+      background: #007aff; /* رنگ آبی iOS */
+      color: #ffffff;
+      text-decoration: none;
+      border-radius: 10px;
+      font-size: 14px;
+      font-weight: 600;
+      transition: background 0.3s ease, transform 0.2s ease;
+      cursor: pointer;
+      margin-left: 10px;
+    }
+
+    .buy-button:hover {
+      background: #005bb5; /* تیره‌تر موقع هاور */
+      transform: scale(1.05);
+    }
+
+    .buy-button i {
+      margin-left: 5px;
+    }
+  </style>
 </head>
 <body>
   <div class="special-particles">
@@ -39,6 +120,8 @@
           <h3>Document.pdf</h3>
           <p>2.5 MB • 2025-04-16</p>
         </div>
+        <a href="#" class="buy-button" onclick="addToCart('Document.pdf')"><i class="fa-solid fa-cart-plus"></i> Buy</a>
+        <div class="file-details">این یک فایل PDF حاوی اسناد مهم است. مناسب برای استفاده تجاری.</div>
       </div>
       <div class="file-card">
         <i class="fa-solid fa-file-word"></i>
@@ -46,6 +129,8 @@
           <h3>Proposal.docx</h3>
           <p>1.8 MB • 2025-04-15</p>
         </div>
+        <a href="#" class="buy-button" onclick="addToCart('Proposal.docx')"><i class="fa-solid fa-cart-plus"></i> Buy</a>
+        <div class="file-details">پروپوزال حرفه‌ای برای ارائه به مشتریان یا شرکا.</div>
       </div>
       <div class="file-card">
         <i class="fa-solid fa-file-excel"></i>
@@ -53,6 +138,8 @@
           <h3>Budget.xlsx</h3>
           <p>1.2 MB • 2025-04-14</p>
         </div>
+        <a href="#" class="buy-button" onclick="addToCart('Budget.xlsx')"><i class="fa-solid fa-cart-plus"></i> Buy</a>
+        <div class="file-details">فایل اکسل برای مدیریت بودجه و هزینه‌ها.</div>
       </div>
     </section>
   </main>
@@ -77,8 +164,30 @@
           card.style.opacity = '1';
           card.style.transform = 'translateY(0)';
         }, index * 200);
+
+        // نمایش توضیحات با کلیک
+        card.addEventListener('click', () => {
+          const isActive = card.classList.contains('active');
+          cards.forEach(c => c.classList.remove('active')); // بستن بقیه کارت‌ها
+          if (!isActive) {
+            card.classList.add('active');
+          }
+        });
+      });
+
+      // بستن توضیحات با کلیک خارج از کارت
+      document.addEventListener('click', (e) => {
+        if (!e.target.closest('.file-card')) {
+          cards.forEach(card => card.classList.remove('active'));
+        }
       });
     });
+
+    // تابع برای اضافه کردن به سبد خرید (فعلاً پیام ساده)
+    function addToCart(fileName) {
+      alert(`${fileName} به سبد خرید اضافه شد!`);
+      // بعداً می‌تونید اینجا کد بک‌اند (مثل Firebase) اضافه کنید
+    }
   </script>
 </body>
 </html>
