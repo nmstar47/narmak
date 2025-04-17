@@ -236,6 +236,7 @@
   </footer>
 
   <script>
+    // تنظیمات Firebase
     const firebaseConfig = {
       // تنظیمات Firebase خودتون رو اینجا وارد کنید
       apiKey: "YOUR_API_KEY",
@@ -246,11 +247,18 @@
       appId: "YOUR_APP_ID"
     };
 
+    // مقداردهی اولیه Firebase
     firebase.initializeApp(firebaseConfig);
     const db = firebase.firestore();
 
-    const userId = 'guest_' + Math.random().toString(36).substr(2, 9);
+    // مدیریت userId با localStorage
+    let userId = localStorage.getItem('userId');
+    if (!userId) {
+      userId = 'guest_' + Math.random().toString(36).substr(2, 9);
+      localStorage.setItem('userId', userId);
+    }
 
+    // اضافه کردن به سبد خرید
     async function addToCart(itemName, price, fileName) {
       try {
         await db.collection('carts').doc(userId).collection('items').add({
@@ -266,6 +274,7 @@
       }
     }
 
+    // انیمیشن‌ها
     document.addEventListener('DOMContentLoaded', () => {
       const cards = document.querySelectorAll('.pi-card');
       cards.forEach((card, index) => {
