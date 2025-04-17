@@ -6,6 +6,59 @@
   <title>Cloude Buy - Photos</title>
   <script src="https://kit.fontawesome.com/bb6b134859.js" crossorigin="anonymous"></script>
   <link rel="stylesheet" href="style.css">
+  <style>
+    /* استایل‌های جدید برای دکمه Buy */
+    .photo-card {
+      position: relative; /* برای قرار دادن دکمه به‌صورت مطلق */
+      background: rgba(255, 255, 255, 0.1);
+      backdrop-filter: blur(10px);
+      border-radius: 15px;
+      padding: 15px;
+      text-align: center;
+      transition: transform 0.3s ease, box-shadow 0.3s ease;
+    }
+
+    .photo-card:hover {
+      transform: translateY(-5px);
+      box-shadow: 0 8px 20px rgba(0, 0, 0, 0.2);
+    }
+
+    .photo-placeholder {
+      width: 100%;
+      height: 150px;
+      background: rgba(255, 255, 255, 0.2);
+      border-radius: 10px;
+      margin-bottom: 10px;
+    }
+
+    .photo-card p {
+      font-size: 14px;
+      color: #cccccc;
+      margin-bottom: 10px;
+    }
+
+    .buy-button {
+      display: inline-block;
+      padding: 8px 20px;
+      background: #007aff; /* رنگ آبی iOS */
+      color: #ffffff;
+      text-decoration: none;
+      border-radius: 10px;
+      font-size: 14px;
+      font-weight: 600;
+      transition: background 0.3s ease, transform 0.2s ease;
+      cursor: pointer;
+    }
+
+    .buy-button:hover {
+      background: #005bb5; /* تیره‌تر موقع هاور */
+      transform: scale(1.05);
+    }
+
+    .buy-button i {
+      margin-left: 5px;
+    }
+  </style>
 </head>
 <body>
   <div class="special-particles">
@@ -36,18 +89,22 @@
       <div class="photo-card">
         <div class="photo-placeholder"></div>
         <p>Photo 1</p>
+        <a href="#" class="buy-button" onclick="addToCart('Photo 1')"><i class="fa-solid fa-cart-plus"></i> Buy</a>
       </div>
       <div class="photo-card">
         <div class="photo-placeholder"></div>
         <p>Photo 2</p>
+        <a href="#" class="buy-button" onclick="addToCart('Photo 2')"><i class="fa-solid fa-cart-plus"></i> Buy</a>
       </div>
       <div class="photo-card">
         <div class="photo-placeholder"></div>
         <p>Photo 3</p>
+        <a href="#" class="buy-button" onclick="addToCart('Photo 3')"><i class="fa-solid fa-cart-plus"></i> Buy</a>
       </div>
       <div class="photo-card">
         <div class="photo-placeholder"></div>
         <p>Photo 4</p>
+        <a href="#" class="buy-button" onclick="addToCart('Photo 4')"><i class="fa-solid fa-cart-plus"></i> Buy</a>
       </div>
     </section>
   </main>
@@ -74,6 +131,12 @@
         }, index * 200);
       });
     });
+
+    // تابع برای اضافه کردن به سبد خرید (فعلاً پیام ساده)
+    function addToCart(photoName) {
+      alert(`${photoName} به سبد خرید اضافه شد!`);
+      // بعداً می‌تونید اینجا کد بک‌اند (مثل Firebase) اضافه کنید
+    }
   </script>
 </body>
 </html>
