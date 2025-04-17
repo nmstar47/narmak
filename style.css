@@ -3,7 +3,10 @@
     padding: 0;
     box-sizing: border-box;
 }
-
+video{
+    width: 40px;
+    height: 40px;
+}
 body {
     background: linear-gradient(45deg, #0f172a, #1e293b, #2d3a4f, #0f172a);
     background-size: 400%;
