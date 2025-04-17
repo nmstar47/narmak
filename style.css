@@ -4,8 +4,11 @@
     box-sizing: border-box;
 }
 video{
-    width: 40px;
-    height: 40px;
+    width: 60px;
+    border-radius: 20px;
+    padding-right: 0px;
+    margin-right: 0px;
+    height: 60px;
 }
 body {
     background: linear-gradient(45deg, #0f172a, #1e293b, #2d3a4f, #0f172a);
