@@ -5,6 +5,7 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>Digza - Pi</title>
   <script src="https://kit.fontawesome.com/bb6b134859.js" crossorigin="anonymous"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.2/gsap.min.js"></script>
   <link rel="stylesheet" href="style.css">
   <style>
     .pi-grid {
@@ -107,6 +108,34 @@
       border-radius: 5px;
     }
 
+    .preview-landing {
+      background: linear-gradient(135deg, #007aff, #005bb5);
+      padding: 20px;
+      text-align: center;
+      color: #ffffff;
+      border-radius: 10px;
+    }
+
+    .preview-landing h4 {
+      font-size: 16px;
+      margin-bottom: 10px;
+    }
+
+    .preview-landing button {
+      padding: 8px 16px;
+      background: #ffffff;
+      color: #007aff;
+      border: none;
+      border-radius: 5px;
+      font-size: 14px;
+      cursor: pointer;
+      transition: background 0.3s ease;
+    }
+
+    .preview-landing button:hover {
+      background: #e6e6e6;
+    }
+
     .buy-button {
       display: inline-block;
       padding: 6px 14px;
@@ -145,12 +174,24 @@
   </header>
 
   <section class="hero">
-    <h1>costume web</h1> - Premium Website Templates & Scripts</h1>
+    <h1>Pi - Premium Website Templates & Scripts</h1>
     <p>Discover ready-to-use website components to elevate your digital projects.</p>
   </section>
 
   <main>
     <section class="pi-grid">
+      <div class="pi-card">
+        <h3>Startup Landing Page</h3>
+        <div class="preview">
+          <div class="preview-landing">
+            <h4>Your Startup</h4>
+            <button>Launch Now</button>
+          </div>
+        </div>
+        <p>An interactive, SEO-friendly landing page for startups.</p>
+        <div class="price">3,000,000 IRR / $100</div>
+        <a href="#" class="buy-button" onclick="addToCart('Startup Landing Page', 3000000)">Buy</a>
+      </div>
       <div class="pi-card">
         <h3>Modern Button</h3>
         <div class="preview">
@@ -181,15 +222,6 @@
         <div class="price">400,000 IRR / $15</div>
         <a href="#" class="buy-button" onclick="addToCart('Website Header', 400000)">Buy</a>
       </div>
-      <div class="pi-card">
-        <h3>Call-to-Action Section</h3>
-        <div class="preview">
-          <button class="preview-button" style="background: #ff4d4d;">Get Started Now!</button>
-        </div>
-        <p>A vibrant CTA section to boost conversions.</p>
-        <div class="price">250,000 IRR / $8</div>
-        <a href="#" class="buy-button" onclick="addToCart('Call-to-Action Section', 250000)">Buy</a>
-      </div>
     </section>
   </main>
 
@@ -213,11 +245,25 @@
           card.style.transform = 'translateY(0)';
         }, index * 200);
       });
+
+      // انیمیشن برای لندینگ‌پیج
+      gsap.from('.preview-landing h4', {
+        opacity: 0,
+        y: 20,
+        duration: 1,
+        delay: 0.5
+      });
+      gsap.from('.preview-landing button', {
+        opacity: 0,
+        y: 20,
+        duration: 1,
+        delay: 0.7
+      });
     });
 
     function addToCart(itemName, price) {
       alert(`${itemName} به سبد خرید اضافه شد! قیمت: ${price} تومان`);
-      // برای فروش واقعی، به درگاه پرداخت (مثل زرین‌پال) وصل کنید
+      // برای فروش واقعی، به درگاه پرداخت وصل کنید
     }
   </script>
 </body>
