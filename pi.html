@@ -6,6 +6,8 @@
   <title>Digza - Pi</title>
   <script src="https://kit.fontawesome.com/bb6b134859.js" crossorigin="anonymous"></script>
   <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.2/gsap.min.js"></script>
+  <script src="https://www.gstatic.com/firebasejs/9.6.10/firebase-app.js"></script>
+  <script src="https://www.gstatic.com/firebasejs/9.6.10/firebase-firestore.js"></script>
   <link rel="stylesheet" href="style.css">
   <style>
     .pi-grid {
@@ -169,7 +171,7 @@
     <nav>
       <a href="about_us.html" title="about us"><i class="fa-solid fa-user-secret"></i></a>
       <a href="tamas.html" title="email or sms"><i class="fa-solid fa-phone"></i></a>
-      <a href="#" title="cart shop"><i class="fa-solid fa-cart-shopping"></i></a>
+      <a href="cart.html" title="cart shop"><i class="fa-solid fa-cart-shopping"></i></a>
     </nav>
   </header>
 
@@ -190,7 +192,7 @@
         </div>
         <p>An interactive, SEO-friendly landing page for startups.</p>
         <div class="price">3,000,000 IRR / $100</div>
-        <a href="#" class="buy-button" onclick="addToCart('Startup Landing Page', 3000000)">Buy</a>
+        <a href="#" class="buy-button" onclick="addToCart('Startup Landing Page', 3000000, 'startup-landing.zip')">Buy</a>
       </div>
       <div class="pi-card">
         <h3>Modern Button</h3>
@@ -199,7 +201,7 @@
         </div>
         <p>A stylish, animated button for websites.</p>
         <div class="price">200,000 IRR / $5</div>
-        <a href="#" class="buy-button" onclick="addToCart('Modern Button', 200000)">Buy</a>
+        <a href="#" class="buy-button" onclick="addToCart('Modern Button', 200000, 'modern-button.zip')">Buy</a>
       </div>
       <div class="pi-card">
         <h3>Contact Form</h3>
@@ -211,7 +213,7 @@
         </div>
         <p>A responsive contact form with validation.</p>
         <div class="price">300,000 IRR / $10</div>
-        <a href="#" class="buy-button" onclick="addToCart('Contact Form', 300000)">Buy</a>
+        <a href="#" class="buy-button" onclick="addToCart('Contact Form', 300000, 'contact-form.zip')">Buy</a>
       </div>
       <div class="pi-card">
         <h3>Website Header</h3>
@@ -220,7 +222,7 @@
         </div>
         <p>A modern header with gradient background.</p>
         <div class="price">400,000 IRR / $15</div>
-        <a href="#" class="buy-button" onclick="addToCart('Website Header', 400000)">Buy</a>
+        <a href="#" class="buy-button" onclick="addToCart('Website Header', 400000, 'website-header.zip')">Buy</a>
       </div>
     </section>
   </main>
@@ -234,6 +236,36 @@
   </footer>
 
   <script>
+    const firebaseConfig = {
+      // تنظیمات Firebase خودتون رو اینجا وارد کنید
+      apiKey: "YOUR_API_KEY",
+      authDomain: "YOUR_AUTH_DOMAIN",
+      projectId: "YOUR_PROJECT_ID",
+      storageBucket: "YOUR_STORAGE_BUCKET",
+      messagingSenderId: "YOUR_MESSAGING_SENDER_ID",
+      appId: "YOUR_APP_ID"
+    };
+
+    firebase.initializeApp(firebaseConfig);
+    const db = firebase.firestore();
+
+    const userId = 'guest_' + Math.random().toString(36).substr(2, 9);
+
+    async function addToCart(itemName, price, fileName) {
+      try {
+        await db.collection('carts').doc(userId).collection('items').add({
+          name: itemName,
+          price: price,
+          fileName: fileName,
+          timestamp: firebase.firestore.FieldValue.serverTimestamp()
+        });
+        alert(`${itemName} به سبد خرید اضافه شد! به صفحه سبد خرید بروید.`);
+      } catch (error) {
+        console.error('Error adding to cart:', error);
+        alert('خطا در اضافه کردن به سبد خرید');
+      }
+    }
+
     document.addEventListener('DOMContentLoaded', () => {
       const cards = document.querySelectorAll('.pi-card');
       cards.forEach((card, index) => {
@@ -246,7 +278,6 @@
         }, index * 200);
       });
 
-      // انیمیشن برای لندینگ‌پیج
       gsap.from('.preview-landing h4', {
         opacity: 0,
         y: 20,
@@ -260,11 +291,6 @@
         delay: 0.7
       });
     });
-
-    function addToCart(itemName, price) {
-      alert(`${itemName} به سبد خرید اضافه شد! قیمت: ${price} تومان`);
-      // برای فروش واقعی، به درگاه پرداخت وصل کنید
-    }
   </script>
 </body>
 </html>
