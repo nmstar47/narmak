@@ -7,7 +7,13 @@
   <script src="https://kit.fontawesome.com/bb6b134859.js" crossorigin="anonymous"></script>
   <link rel="stylesheet" href="style.css">
   <style>
-    /* استایل‌های جدید برای توضیحات و دکمه Buy */
+    /* استایل‌های آپدیت‌شده برای توضیحات و دکمه Buy */
+    .file-list {
+      display: flex;
+      flex-direction: column;
+      gap: 15px;
+    }
+
     .file-card {
       display: flex;
       align-items: center;
@@ -15,7 +21,7 @@
       backdrop-filter: blur(10px);
       border-radius: 15px;
       padding: 15px;
-      transition: transform 0.3s ease, box-shadow 0.3s ease;
+      transition: transform 0.3s ease, box-shadow 0.3s ease, margin-bottom 0.3s ease;
       position: relative;
       cursor: pointer;
     }
@@ -23,6 +29,10 @@
     .file-card:hover {
       transform: translateY(-5px);
       box-shadow: 0 8px 20px rgba(0, 0, 0, 0.2);
+    }
+
+    .file-card.active {
+      margin-bottom: 0; /* به‌طور دینامیک تو JS تنظیم می‌شه */
     }
 
     .file-info {
@@ -66,13 +76,13 @@
 
     .buy-button {
       display: inline-block;
-      padding: 8px 20px;
+      padding: 6px 14px; /* کوچیک‌تر برای سبک iOS */
       background: #007aff; /* رنگ آبی iOS */
       color: #ffffff;
       text-decoration: none;
-      border-radius: 10px;
-      font-size: 14px;
-      font-weight: 600;
+      border-radius: 8px; /* گوشه‌های نرم‌تر */
+      font-size: 12px; /* فونت ظریف */
+      font-weight: 500; /* وزن فونت سبک‌تر */
       transition: background 0.3s ease, transform 0.2s ease;
       cursor: pointer;
       margin-left: 10px;
@@ -81,10 +91,6 @@
     .buy-button:hover {
       background: #005bb5; /* تیره‌تر موقع هاور */
       transform: scale(1.05);
-    }
-
-    .buy-button i {
-      margin-left: 5px;
     }
   </style>
 </head>
@@ -120,7 +126,7 @@
           <h3>Document.pdf</h3>
           <p>2.5 MB • 2025-04-16</p>
         </div>
-        <a href="#" class="buy-button" onclick="addToCart('Document.pdf')"><i class="fa-solid fa-cart-plus"></i> Buy</a>
+        <a href="#" class="buy-button" onclick="addToCart('Document.pdf')">Buy</a>
         <div class="file-details">این یک فایل PDF حاوی اسناد مهم است. مناسب برای استفاده تجاری.</div>
       </div>
       <div class="file-card">
@@ -129,7 +135,7 @@
           <h3>Proposal.docx</h3>
           <p>1.8 MB • 2025-04-15</p>
         </div>
-        <a href="#" class="buy-button" onclick="addToCart('Proposal.docx')"><i class="fa-solid fa-cart-plus"></i> Buy</a>
+        <a href="#" class="buy-button" onclick="addToCart('Proposal.docx')">Buy</a>
         <div class="file-details">پروپوزال حرفه‌ای برای ارائه به مشتریان یا شرکا.</div>
       </div>
       <div class="file-card">
@@ -138,7 +144,7 @@
           <h3>Budget.xlsx</h3>
           <p>1.2 MB • 2025-04-14</p>
         </div>
-        <a href="#" class="buy-button" onclick="addToCart('Budget.xlsx')"><i class="fa-solid fa-cart-plus"></i> Buy</a>
+        <a href="#" class="buy-button" onclick="addToCart('Budget.xlsx')">Buy</a>
         <div class="file-details">فایل اکسل برای مدیریت بودجه و هزینه‌ها.</div>
       </div>
     </section>
@@ -166,11 +172,22 @@
         }, index * 200);
 
         // نمایش توضیحات با کلیک
-        card.addEventListener('click', () => {
+        card.addEventListener('click', (e) => {
+          // جلوگیری از فعال شدن توضیحات موقع کلیک روی دکمه Buy
+          if (e.target.closest('.buy-button')) return;
+
           const isActive = card.classList.contains('active');
-          cards.forEach(c => c.classList.remove('active')); // بستن بقیه کارت‌ها
+          cards.forEach(c => {
+            c.classList.remove('active');
+            c.style.marginBottom = '0'; // ریست margin-bottom
+          });
+
           if (!isActive) {
             card.classList.add('active');
+            // محاسبه ارتفاع توضیحات برای جابجایی
+            const details = card.querySelector('.file-details');
+            const detailsHeight = details.offsetHeight + 10; // +10 برای margin
+            card.style.marginBottom = `${detailsHeight}px`;
           }
         });
       });
@@ -178,15 +195,27 @@
       // بستن توضیحات با کلیک خارج از کارت
       document.addEventListener('click', (e) => {
         if (!e.target.closest('.file-card')) {
-          cards.forEach(card => card.classList.remove('active'));
+          cards.forEach(card => {
+            card.classList.remove('active');
+            card.style.marginBottom = '0';
+          });
         }
+      });
+
+      // بستن توضیحات با هاور خارج (اختیاری)
+      cards.forEach(card => {
+        card.addEventListener('mouseleave', () => {
+          if (!card.classList.contains('active')) {
+            card.style.marginBottom = '0';
+          }
+        });
       });
     });
 
-    // تابع برای اضافه کردن به سبد خرید (فعلاً پیام ساده)
+    // تابع برای اضافه کردن به سبد خرید
     function addToCart(fileName) {
       alert(`${fileName} به سبد خرید اضافه شد!`);
-      // بعداً می‌تونید اینجا کد بک‌اند (مثل Firebase) اضافه کنید
+      // بعداً می‌تونید کد بک‌اند (مثل Firebase) اضافه کنید
     }
   </script>
 </body>
