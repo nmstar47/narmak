@@ -120,6 +120,7 @@
   </footer>
 
   <script>
+    // تنظیمات Firebase
     const firebaseConfig = {
       // تنظیمات Firebase خودتون رو اینجا وارد کنید
       apiKey: "YOUR_API_KEY",
@@ -130,12 +131,19 @@
       appId: "YOUR_APP_ID"
     };
 
+    // مقداردهی اولیه Firebase
     firebase.initializeApp(firebaseConfig);
     const db = firebase.firestore();
     const storage = firebase.storage();
 
-    const userId = 'guest_' + Math.random().toString(36).substr(2, 9);
+    // مدیریت userId با localStorage
+    let userId = localStorage.getItem('userId');
+    if (!userId) {
+      userId = 'guest_' + Math.random().toString(36).substr(2, 9);
+      localStorage.setItem('userId', userId);
+    }
 
+    // لود کردن سبد خرید
     async function loadCart() {
       const cartItemsDiv = document.getElementById('cart-items');
       const cartTotalP = document.getElementById('cart-total');
@@ -159,6 +167,7 @@
       cartTotalP.textContent = `Total: ${total.toLocaleString()} IRR`;
     }
 
+    // حذف از سبد خرید
     async function removeFromCart(itemId) {
       try {
         await db.collection('carts').doc(userId).collection('items').doc(itemId).delete();
@@ -169,8 +178,10 @@
       }
     }
 
+    // پرداخت و دانلود
     async function checkout() {
       try {
+        // شبیه‌سازی پرداخت
         alert('پرداخت با موفقیت انجام شد! دانلود فایل‌ها شروع می‌شود...');
 
         const snapshot = await db.collection('carts').doc(userId).collection('items').get();
@@ -178,6 +189,7 @@
           const item = doc.data();
           const fileName = item.fileName;
 
+          // دریافت لینک دانلود
           storage.ref(fileName).getDownloadURL().then(url => {
             const link = document.createElement('a');
             link.href = url;
@@ -191,6 +203,7 @@
           });
         });
 
+        // پاک کردن سبد خرید
         const batch = db.batch();
         snapshot.forEach(doc => {
           batch.delete(doc.ref);
@@ -203,6 +216,7 @@
       }
     }
 
+    // لود اولیه
     document.addEventListener('DOMContentLoaded', () => {
       loadCart();
     });
