@@ -5,9 +5,6 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>Digza - Shopping Cart</title>
   <script src="https://kit.fontawesome.com/bb6b134859.js" crossorigin="anonymous"></script>
-  <script src="https://www.gstatic.com/firebasejs/9.6.10/firebase-app.js"></script>
-  <script src="https://www.gstatic.com/firebasejs/9.6.10/firebase-firestore.js"></script>
-  <script src="https://www.gstatic.com/firebasejs/9.6.10/firebase-storage.js"></script>
   <link rel="stylesheet" href="style.css">
   <style>
     .cart-section {
@@ -77,6 +74,11 @@
     .checkout-button:hover {
       background: #005bb5;
     }
+
+    .checkout-button:disabled {
+      background: #cccccc;
+      cursor: not-allowed;
+    }
   </style>
 </head>
 <body>
@@ -119,38 +121,39 @@
     </div>
   </footer>
 
-  <script>
-    // تنظیمات Firebase
-    const firebaseConfig = {
-      // تنظیمات Firebase خودتون رو اینجا وارد کنید
-      apiKey: "YOUR_API_KEY",
-      authDomain: "YOUR_AUTH_DOMAIN",
-      projectId: "YOUR_PROJECT_ID",
-      storageBucket: "YOUR_STORAGE_BUCKET",
-      messagingSenderId: "YOUR_MESSAGING_SENDER_ID",
-      appId: "YOUR_APP_ID"
-    };
+  <script type="module">
+    import { initializeApp } from 'https://www.gstatic.com/firebasejs/10.12.2/firebase-app.js';
+    import { getFirestore, collection, getDocs, deleteDoc, writeBatch } from 'https://www.gstatic.com/firebasejs/10.12.2/firebase-firestore.js';
+    import { getStorage, ref, getDownloadURL } from 'https://www.gstatic.com/firebasejs/10.12.2/firebase-storage.js';
+    import { firebaseConfig } from './firebase-config.js';
 
-    // مقداردهی اولیه Firebase
-    firebase.initializeApp(firebaseConfig);
-    const db = firebase.firestore();
-    const storage = firebase.storage();
+    // Initialize Firebase
+    const app = initializeApp(firebaseConfig);
+    const db = getFirestore(app);
+    const storage = getStorage(app);
 
-    // مدیریت userId با localStorage
+    // Manage userId with localStorage
     let userId = localStorage.getItem('userId');
     if (!userId) {
       userId = 'guest_' + Math.random().toString(36).substr(2, 9);
       localStorage.setItem('userId', userId);
     }
 
-    // لود کردن سبد خرید
+    // Load cart
     async function loadCart() {
       const cartItemsDiv = document.getElementById('cart-items');
       const cartTotalP = document.getElementById('cart-total');
       cartItemsDiv.innerHTML = '';
 
       let total = 0;
-      const snapshot = await db.collection('carts').doc(userId).collection('items').get();
+      const snapshot = await getDocs(collection(db, 'carts', userId, 'items'));
+
+      if (snapshot.empty) {
+        cartItemsDiv.innerHTML = '<p style="color: #cccccc; text-align: center;">سبد خرید شما خالی است.</p>';
+        cartTotalP.textContent = 'Total: 0 IRR';
+        return;
+      }
+
       snapshot.forEach(doc => {
         const item = doc.data();
         total += item.price;
@@ -167,30 +170,39 @@
       cartTotalP.textContent = `Total: ${total.toLocaleString()} IRR`;
     }
 
-    // حذف از سبد خرید
-    async function removeFromCart(itemId) {
+    // Remove from cart
+    window.removeFromCart = async function(itemId) {
       try {
-        await db.collection('carts').doc(userId).collection('items').doc(itemId).delete();
+        await deleteDoc(doc(db, 'carts', userId, 'items', itemId));
         loadCart();
       } catch (error) {
         console.error('Error removing from cart:', error);
         alert('خطا در حذف از سبد خرید');
       }
-    }
+    };
 
-    // پرداخت و دانلود
-    async function checkout() {
+    // Checkout and download
+    window.checkout = async function() {
+      const checkoutButton = document.getElementById('checkout-button');
+      checkoutButton.disabled = true;
+      checkoutButton.textContent = 'در حال پردازش...';
+
       try {
-        // شبیه‌سازی پرداخت
+        const snapshot = await getDocs(collection(db, 'carts', userId, 'items'));
+        if (snapshot.empty) {
+          alert('سبد خرید شما خالی است!');
+          checkoutButton.disabled = false;
+          checkoutButton.textContent = 'Checkout';
+          return;
+        }
+
         alert('پرداخت با موفقیت انجام شد! دانلود فایل‌ها شروع می‌شود...');
 
-        const snapshot = await db.collection('carts').doc(userId).collection('items').get();
         snapshot.forEach(doc => {
           const item = doc.data();
           const fileName = item.fileName;
 
-          // دریافت لینک دانلود
-          storage.ref(fileName).getDownloadURL().then(url => {
+          getDownloadURL(ref(storage, fileName)).then(url => {
             const link = document.createElement('a');
             link.href = url;
             link.download = fileName;
@@ -203,8 +215,7 @@
           });
         });
 
-        // پاک کردن سبد خرید
-        const batch = db.batch();
+        const batch = writeBatch(db);
         snapshot.forEach(doc => {
           batch.delete(doc.ref);
         });
@@ -213,10 +224,13 @@
       } catch (error) {
         console.error('Error during checkout:', error);
         alert('خطا در فرآیند پرداخت');
+      } finally {
+        checkoutButton.disabled = false;
+        checkoutButton.textContent = 'Checkout';
       }
-    }
+    };
 
-    // لود اولیه
+    // Initial load
     document.addEventListener('DOMContentLoaded', () => {
       loadCart();
     });
