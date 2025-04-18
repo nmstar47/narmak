@@ -6,8 +6,6 @@
   <title>Digza - Pi</title>
   <script src="https://kit.fontawesome.com/bb6b134859.js" crossorigin="anonymous"></script>
   <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.2/gsap.min.js"></script>
-  <script src="https://www.gstatic.com/firebasejs/9.6.10/firebase-app.js"></script>
-  <script src="https://www.gstatic.com/firebasejs/9.6.10/firebase-firestore.js"></script>
   <link rel="stylesheet" href="style.css">
   <style>
     .pi-grid {
@@ -235,46 +233,48 @@
     </div>
   </footer>
 
-  <script>
-    // تنظیمات Firebase
-    const firebaseConfig = {
-      // تنظیمات Firebase خودتون رو اینجا وارد کنید
-      apiKey: "YOUR_API_KEY",
-      authDomain: "YOUR_AUTH_DOMAIN",
-      projectId: "YOUR_PROJECT_ID",
-      storageBucket: "YOUR_STORAGE_BUCKET",
-      messagingSenderId: "YOUR_MESSAGING_SENDER_ID",
-      appId: "YOUR_APP_ID"
-    };
+  <script type="module">
+    import { initializeApp } from 'https://www.gstatic.com/firebasejs/10.12.2/firebase-app.js';
+    import { getFirestore, collection, addDoc, query, where, getDocs } from 'https://www.gstatic.com/firebasejs/10.12.2/firebase-firestore.js';
+    import { firebaseConfig } from './firebase-config.js';
 
-    // مقداردهی اولیه Firebase
-    firebase.initializeApp(firebaseConfig);
-    const db = firebase.firestore();
+    // Initialize Firebase
+    const app = initializeApp(firebaseConfig);
+    const db = getFirestore(app);
 
-    // مدیریت userId با localStorage
+    // Manage userId with localStorage
     let userId = localStorage.getItem('userId');
     if (!userId) {
       userId = 'guest_' + Math.random().toString(36).substr(2, 9);
       localStorage.setItem('userId', userId);
     }
 
-    // اضافه کردن به سبد خرید
-    async function addToCart(itemName, price, fileName) {
+    // Add to cart
+    window.addToCart = async function(itemName, price, fileName) {
       try {
-        await db.collection('carts').doc(userId).collection('items').add({
+        const cartRef = collection(db, 'carts', userId, 'items');
+        const q = query(cartRef, where('name', '==', itemName));
+        const querySnapshot = await getDocs(q);
+
+        if (!querySnapshot.empty) {
+          alert(`${itemName} قبلاً در سبد خرید وجود دارد!`);
+          return;
+        }
+
+        await addDoc(cartRef, {
           name: itemName,
           price: price,
           fileName: fileName,
-          timestamp: firebase.firestore.FieldValue.serverTimestamp()
+          timestamp: new Date()
         });
         alert(`${itemName} به سبد خرید اضافه شد! به صفحه سبد خرید بروید.`);
       } catch (error) {
         console.error('Error adding to cart:', error);
         alert('خطا در اضافه کردن به سبد خرید');
       }
-    }
+    };
 
-    // انیمیشن‌ها
+    // Animations
     document.addEventListener('DOMContentLoaded', () => {
       const cards = document.querySelectorAll('.pi-card');
       cards.forEach((card, index) => {
